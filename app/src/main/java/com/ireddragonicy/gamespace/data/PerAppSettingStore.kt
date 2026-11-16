@@ -164,7 +164,7 @@ class PerAppSettingStore @Inject constructor(
     fun gpuComposition(pkg: String): Boolean {
         val current = Settings.Secure.getStringForUser(
             context.contentResolver,
-            Settings.Secure.DISABLE_HW_OVERLAYS_APPS,
+            "disable_hw_overlays_apps",
             UserHandle.USER_CURRENT
         ).orEmpty()
         return current.split(",").any { it == pkg }
@@ -173,7 +173,7 @@ class PerAppSettingStore @Inject constructor(
     fun setGpuComposition(pkg: String, enabled: Boolean) {
         val current = Settings.Secure.getStringForUser(
             context.contentResolver,
-            Settings.Secure.DISABLE_HW_OVERLAYS_APPS,
+            "disable_hw_overlays_apps",
             UserHandle.USER_CURRENT
         ).orEmpty()
 
@@ -186,7 +186,7 @@ class PerAppSettingStore @Inject constructor(
         runCatching {
             Settings.Secure.putStringForUser(
                 context.contentResolver,
-                Settings.Secure.DISABLE_HW_OVERLAYS_APPS,
+                "disable_hw_overlays_apps",
                 set.joinToString(","),
                 UserHandle.USER_CURRENT
             )

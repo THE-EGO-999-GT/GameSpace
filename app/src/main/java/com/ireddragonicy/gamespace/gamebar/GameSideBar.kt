@@ -295,7 +295,7 @@ class GameSidebar(
                 ?: ActivityTaskManager.getService()?.focusedRootTaskInfo?.taskId
         }.getOrNull()
         if (taskId != null) {
-            platform.performAction(AxPlatformClient.ACTION_GAME_RECORD, taskId.toString())
+            android.util.Log.w("GameSidebar", "Game record not supported by this ROM (task $taskId)")
         } else {
             android.util.Log.w("GameSidebar", "Record: no task found for $gamePkg")
         }

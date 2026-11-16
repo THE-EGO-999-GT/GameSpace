@@ -138,7 +138,14 @@ class NetworkPingMonitor {
             if (service == null) return emptyList()
 
             val uidStr = gameUid.toString()
-            val lines = service.dumpSocketStats() ?: return emptyList()
+            val raw = runCatching {
+                service.javaClass.getMethod("dumpSocketStats").invoke(service)
+            }.getOrNull()
+            val lines: List<String> = when (raw) {
+                is Array<*> -> raw.filterIsInstance<String>()
+                is List<*> -> raw.filterIsInstance<String>()
+                else -> return emptyList()
+            }
 
             for (line in lines) {
                 val trimmed = line.trim()
